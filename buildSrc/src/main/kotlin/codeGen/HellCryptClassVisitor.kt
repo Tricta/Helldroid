@@ -64,76 +64,19 @@ class HellCryptClassVisitor(api: Int, cv: ClassVisitor) : ClassVisitor(api, cv) 
             super.visitMethodInsn(INVOKEVIRTUAL, "com/lib/hellcrypt/Stub", "hellYoki", "(Ljava/lang/String;)Ljava/lang/String;", false)
         }
 
-        /*private fun generateRandomString(): String {
-            val length = 8 // Length of the random string
-            val characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
-            val result = StringBuilder(length)
-            for (i in 0 until length) {
-                val index = (Math.random() * characters.length).toInt()
-                result.append(characters[index])
-            }
-            return result.toString()
-        }*/
-
         override fun visitLdcInsn(value: Any) {
             if (value is String) {
                 val encrypted = hellEncryptor.encrypt(value).decodeToString()
 
                 writeEncrypted(encrypted)
             } else {
-                // Handle non-String values normally
                 super.visitLdcInsn(value)
-
-                /*// Push two integer values onto the stack for comparison
-                super.visitLdcInsn(2) // First value
-                super.visitLdcInsn(1) // Second value
-
-                // Perform the comparison and jump if first >= second
-                val falseBranch = Label()
-                super.visitJumpInsn(IF_ICMPGE, falseBranch)
-
-                // Remove top stack value if the comparison fails (to balance the stack)
-                super.visitInsn(Opcodes.POP)
-
-                // Push a random string onto the stack
-                super.visitLdcInsn(generateRandomString())
-
-                // Mark the false branch for the jump
-                super.visitLabel(falseBranch)*/
             }
         }
 
         override fun visitMethodInsn(opcode: Int, owner: String, name: String, descriptor: String, isInterface: Boolean) {
             if (name == "init") {
                 super.visitMethodInsn(opcode, owner, name, descriptor, isInterface)
-
-                /*// Step 1: Call Method targetMethod = MainActivity.class.getDeclaredMethod("newFunc");
-                super.visitLdcInsn(Type.getType("Lcom/sdk/helldroid/MainActivity;"))
-                super.visitLdcInsn("newFunc")
-                super.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Class")
-                super.visitMethodInsn(
-                        Opcodes.INVOKEVIRTUAL,
-                        "java/lang/Class",
-                        "getDeclaredMethod",
-                        "(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;",
-                        false
-                )
-
-                super.visitVarInsn(Opcodes.ASTORE, 1)
-
-                // Step 2: Call Method replacementMethod = MainActivity.class.getDeclaredMethod("newFunc2");
-                super.visitLdcInsn(Type.getType("Lcom/sdk/helldroid/MainActivity;"))
-                super.visitLdcInsn("newFunc2")
-                super.visitTypeInsn(Opcodes.ANEWARRAY, "java/lang/Class")
-                super.visitMethodInsn(
-                        Opcodes.INVOKEVIRTUAL,
-                        "java/lang/Class",
-                        "getDeclaredMethod",
-                        "(Ljava/lang/String;[Ljava/lang/Class;)Ljava/lang/reflect/Method;",
-                        false
-                )
-
-                super.visitVarInsn(Opcodes.ASTORE, 2)*/
             } else {
                 super.visitMethodInsn(opcode, owner, name, descriptor, isInterface)
             }

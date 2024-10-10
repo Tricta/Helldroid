@@ -5,6 +5,7 @@ import hellCryptOptions
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 
+
 class hellCrypt: Plugin<Project>{
     companion object{
         const val PLUGIN_NAME = "hellCrypt"
@@ -17,6 +18,9 @@ class hellCrypt: Plugin<Project>{
 
         val androidComponents = project.extensions.findByType(AndroidComponentsExtension::class.java)
         androidComponents?.onVariants { variant ->
+            variant.instrumentation.transformClassesWith(MainActivityClassVisitorFactory::class.java, InstrumentationScope.ALL) {}
+            variant.instrumentation.setAsmFramesComputationMode(FramesComputationMode.COPY_FRAMES)
+
             variant.instrumentation.transformClassesWith(HellCryptClassVisitorFactory::class.java, InstrumentationScope.ALL) {}
             variant.instrumentation.setAsmFramesComputationMode(FramesComputationMode.COPY_FRAMES)
         }

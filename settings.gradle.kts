@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "Helldroid"
 include(":app")
 include(":hellCrypt")
+include(":helldroid")

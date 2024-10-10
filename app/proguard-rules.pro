@@ -1,3 +1,4 @@
+
 -keep, allowoptimization public class com.lib.hellcrypt.hellcrypt {
     public static void init();
 }
@@ -20,12 +21,12 @@
     public native void ReplaceMethodByObject(java.lang.Object, java.lang.Object);
 }
 
--keepclasseswithmembers, allowoptimization class com.sdk.helldroid.Helldroid {
+-keepclasseswithmembers, allowoptimization class com.lib.helldroid.Helldroid {
     native <methods>;
 }
 
--keepclassmembers, allowoptimization class com.sdk.helldroid.Helldroid {
-    public static void LoadLibrary(android.content.Context);
+-keepclassmembers, allowoptimization class com.lib.helldroid.Helldroid {
+    public static void LoadLibrary(android.content.Context, java.lang.Class);
     public static void registerNativeMethods(java.lang.Class);
     public static void createDummyFile(android.content.Context);
     public static void checkMainTrace();
